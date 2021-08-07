@@ -1,0 +1,3 @@
+Représente la simulation du calcul de la valeur de pi grâce à la méthode de monte-carlo.
+
+Pour voir comment le script s'utilise lancer simplement " approximate_pi.py " puis lire l'erreur 
