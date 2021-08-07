@@ -1,0 +1,270 @@
+#ifndef NOS_FONCTIONS_H
+#define NOS_FONCTIONS_H
+#include "Nos_structures.h"
+#include "ei_widget.h"
+
+ei_bool_t ei_on_clipper     (ei_rect_t *clipper,
+                             int x,
+                             int y);
+
+int       maximum           (int a, int b);
+int       minimum           (int a, int b);
+
+
+/*-------------------------------Functions for the TC and the TCA--------------------------------*/
+extern      ei_TC *ei_TC_create(int length);
+
+/* Fill the TC with points */
+extern void ei_TC_initialisation(ei_TC                     *TC,
+                                 const ei_linked_point_t*    first_point,
+                                 int                         y_min_global);
+
+extern void afficher_point(const ei_linked_point_t *TC);
+
+extern void afficher_TC(ei_TC *TC);
+
+/* Displays the number of scanlines, the height of the polygon, ymin and ymax */
+extern void nb_scanline(const ei_linked_point_t* first_point,
+                        int*                     len,
+                        int*                     min,
+                        int*                     max);
+
+extern void ajoute_dans_tca(ei_linked_info* cote,
+                            ei_linked_info* tca);
+
+/*--------------------------------Functions printing buttons or frames--------------------------------------*/
+
+
+/**
+ * \brief	Function creating an arc (or a circle)
+ *
+ * @param	center	        The center of the arc (or the circle) to create.
+ * @param	r		The radius of the arc (or the circle) to create.
+ * @param	start_angle	The starting angle of the arc (or the circle) to create.
+ * @param	end_angle	The ending angle of the arc (or the circle) to create.
+ *
+ * @return 			The linked list composed of points corresponding to the arc (or the circle).
+ */
+
+extern ei_linked_point_t * ei_draw_arc(ei_point_t center,
+                                       int r,
+                                       float start_angle,
+                                       float end_angle);
+
+/**
+ * \brief	Function creating a rounded frame, its upper part or its lower part.
+ *
+ * @param	rectangle	        The rectangle surrounding the frame containing the rounded frame to draw.
+ * @param	ray		        The radius of the angles of the rounded frame.
+ * @param	part		        If _part_ value is 0, the function creates all the rounded frame.
+ *                                      If this value is 1 it creates the upper part of the rounded frame and the lower part
+ *                                      if this value is 2.
+ *
+ * @return 			The linked list composed of points corresponding to the rounded frame, its upper part or its lower part.
+ */
+
+extern ei_linked_point_t * rounded_frame(ei_rect_t rectangle,
+                                         int        ray,
+                                         int        part);
+
+
+/**
+ * \brief	Function creating a rectangle frame, its upper part or its lower part.
+ *
+ * @param	rectangle	        The rectangle corresponding to the frame to draw.
+ * @param	part		        If _part_ value is 0, the function creates all the frame.
+ *                                      If this value is 1 it creates the upper part of the frame and the lower part
+ *                                      if this value is 2.
+ *
+ * @return 			The linked list composed of points corresponding to the frame, its upper part or its lower part.
+ */
+
+extern ei_linked_point_t * rectangle_frame(ei_rect_t rectangle,
+                                           int part);
+
+
+
+/**
+ * \brief	Function drawing a button on a given surface.
+ *
+ * @param	surface	                The surface on which we draw.
+ * @param	rectangle	        The rectangle surrounding the button to draw.
+ * @param	ray		        The radius of the angles of the button to draw.
+ * @param	color		        The color of the button to draw.
+ * @param	clipper		        The rectangle corresponding to the clipper.
+ * @param	relief		        The relief of the button, the values can be ei_relief_none (or 0) when the button is flat,
+ *                                      ei_relief_raised when it's not pushed or ei_relief_sunken when it's pushed.
+ * @param	bordure		        The size of the border of the button when the relief is different from 0.
+ * @param	text		        The text to draw on the button.
+ * @param	text_font		The font of the text to draw.
+ * @param	text_color		        The color of the text to draw.
+ * @param	text_anchor		The place of the text, the values can be ei_anc_center,ei_anc_north, ei_anc_northeast etc..
+ */
+
+extern void                 draw_button(ei_surface_t surface,
+                                        ei_rect_t     rectangle,
+                                        int           ray,
+                                        ei_color_t    color,
+                                        ei_rect_t*    clipper,
+                                        ei_relief_t   relief,
+                                        int           bordure,
+                                        char*         text,
+                                        ei_font_t*    text_font,
+                                        ei_color_t    text_color,
+                                        ei_anchor_t   text_anchor);
+
+/*--------------------------------Functions for the widgets--------------------------------------*/
+
+/**
+ * \brief	Function drawing a frame on a given surface.
+ *
+ * @param	widget	                The widget corresponding to the frame to draw.
+ * @param	surface	                The surface on which to draw.
+ * @param       pick_surface		The surface offscreen on which to do the picking.
+ * @param	clipper		        The rectangle corresponding to the clipper.
+ */
+
+extern void         ei_frame_drawfunc_t    (ei_widget_t* widget,
+                                            ei_surface_t surface,
+                                            ei_surface_t pick_surface,
+                                            ei_rect_t*   clipper);
+
+/**
+ * \brief	Function drawing a button on a given surface.
+ *
+ * @param	widget	                The widget corresponding to the button to draw.
+ * @param	surface	                The surface on which to draw.
+ * @param       pick_surface		The surface offscreen on which to do the picking.
+ * @param	clipper		        The rectangle corresponding to the clipper.
+ */
+
+extern void         ei_button_drawfunc_t   (ei_widget_t* widget,
+                                            ei_surface_t surface,
+                                            ei_surface_t pick_surface,
+                                            ei_rect_t*   clipper);
+
+/**
+ * \brief	Function drawing a toplevel on a given surface.
+ *
+ * @param	widget	                The widget corresponding to the toplevel to draw.
+ * @param	surface	                The surface on which to draw.
+ * @param       pick_surface		The surface offscreen on which to do the picking.
+ * @param	clipper		        The rectangle corresponding to the clipper.
+ */
+extern void         ei_toplevel_drawfunc_t (ei_widget_t* widget,
+                                            ei_surface_t surface,
+                                            ei_surface_t pick_surface,
+                                            ei_rect_t*   clipper);
+
+/**
+ * \brief	Function setting the default parameters of a frame.
+ *
+ * @param	widget	                The widget corresponding to the frame.
+ */
+
+extern void	        ei_frame_setdefaultsfunc_t    (struct ei_widget_t* widget);
+
+/**
+ * \brief	Function setting the default parameters of a button.
+ *
+ * @param	widget	                The widget corresponding to the button.
+ */
+
+extern void	        ei_button_setdefaultsfunc_t   (struct ei_widget_t* widget);
+
+/**
+ * \brief	Function setting the default parameters of a toplevel.
+ *
+ * @param	widget	                The widget corresponding to the toplevel.
+ */
+extern void	        ei_toplevel_setdefaultsfunc_t (struct ei_widget_t* widget);
+
+/**
+ * \brief	Function creating an empty frame.
+ *
+ * @return 		The empty frame which has just been created.
+ */
+
+extern ei_widget_t* ei_frame_allocfunc_t(void);
+
+/**
+ * \brief	Function creating an empty button.
+ *
+ * @return 		The empty button which has just been created.
+ */
+
+extern ei_widget_t* ei_button_allocfunc_t(void);
+
+/**
+ * \brief	Function creating an empty toplevel.
+ *
+ * @return 		The empty toplevel which has just been created.
+ */
+
+extern ei_widget_t* ei_toplevel_allocfunc_t(void);
+
+/**
+ * \brief	Function releasing the memory used by a frame.
+ *
+ * @param	widget	                The widget corresponding to the frame.
+ */
+
+extern void	        ei_frame_releasefunc_t    (struct ei_widget_t*	widget);
+
+/**
+ * \brief	Function releasing the memory used by a button.
+ *
+ * @param	widget	                The widget corresponding to the button.
+ */
+extern void	        ei_button_releasefunc_t   (struct ei_widget_t*	widget);
+
+/**
+ * \brief	Function releasing the memory used by a toplevel.
+ *
+ * @param	widget	                The widget corresponding to the toplevel.
+ */
+extern void	        ei_toplevel_releasefunc_t (struct ei_widget_t*	widget);
+
+/*-------------------------------Function for widgetclass----------------------------------*/
+
+/**
+ * @brief	Registers a class to the program so that widgets of this class can be created.
+ *		This must be done only once per widged class in the application.
+ *
+ * @param	widgetclass	The structure describing the class.
+ */
+
+extern void ei_widgetclass_register (ei_widgetclass_t* widgetclass);
+
+/*---------------------------------Functions for placer    ----------------------------------*/
+void compute_requested_size(struct ei_widget_t* widget, ei_size_t original_size);
+
+/**
+ * \brief	Function returning the color under the cursor in the offscreen.
+ *
+ * @param	offscreen	        The surface corresponding to the offscreen
+ * @param	mouse_point	        The point where the cursor is located.
+ *
+ * @return 		The color pointed by the cursor.
+ */
+
+extern ei_color_t ei_color_of_pixel(ei_surface_t offscreen,ei_point_t mouse_point);
+
+
+
+extern void draw_all_widgets(ei_widget_t *widget );
+
+/**
+ * \brief	Function returning the widget corresponding to the given color in the offscreen.
+ *
+ * @param	widget	        The widget parent from all the other widgets
+ * @param	color	        The given color.
+ *
+ * @return 		The widget corresponding to the given color.
+ */
+
+extern ei_widget_t * search_widget(ei_widget_t *widget, ei_color_t color );
+extern ei_surface_t draw_offscreen (void);
+
+extern void ei_last_widget_draw(ei_widget_t*        widget);
+#endif
