@@ -1,5 +1,6 @@
-# My projects
+# Some examples of My projects
 
 - Shiny_App : Shiny application in R which analyses levels of degradation for reliable products, in order to use it open the Shiny_app.Rproj file in RStudio and play "Run App"  
 - ConnectFour : Old project of a Connect Four game in Python that can be played solo or in duo. You need the pygame library in order to work. You can lauch the "Puissance4DuoGraphique.py" file to play in duo or the "modeMonoJoueur.py" to play solo. The solo mode is in French though.
 - PI_simulator : Simulator of the Pi value with Monte-Carlo Algorithm. The result of the simulator is a .gif that shows the evolution of the simulation. To make this simulator work lauch the "approximate.py" file with the following parameters : the size of the image,  the number of points you want to simulate and the number of digits you want after the comma. For this simulator you need OpenCv library. 
+- Simulation_Multi_Agent_Systems : Simulation in Java of different models of Multi agent systems. Whithout knowing anything about my models you can try this by lauching "make Boids" , "make Conway" , "make Immigration" or "make Schelling" in the root file and see the result.
